@@ -1,0 +1,7 @@
+rootProject.name = 'kuber'
+include 'domain'
+include 'service'
+include 'client'
+include 'domain'
+include 'client'
+
