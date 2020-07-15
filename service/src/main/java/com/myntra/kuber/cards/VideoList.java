@@ -3,6 +3,15 @@ package com.myntra.kuber.cards;
 public class VideoList {
 
     private  String  type;
-    private String allignment;
 
+    private VideoListProps props;
+
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "type=" + type +
+                ", props=" + props +
+                '}';
+    }
 }
