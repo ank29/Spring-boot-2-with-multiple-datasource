@@ -23,4 +23,11 @@ public class CollectionStyles implements Serializable {
     @Column(name="style_id")
     protected long styleId;
 
+    CollectionStyles(){}
+
+    public CollectionStyles(long collectionId, long styleId){
+        this.collectionId = collectionId;
+        this.styleId = styleId;
+    }
+
 }

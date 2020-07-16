@@ -23,4 +23,8 @@ public class StyleRepoImpl {
     public List<Style> styleListByVideoId(long videoId){
         return styleRepository.getAllByVideoId(videoId);
     }
+
+    public Style saveStyle(Style style){
+        return styleRepository.save(style);
+    }
 }

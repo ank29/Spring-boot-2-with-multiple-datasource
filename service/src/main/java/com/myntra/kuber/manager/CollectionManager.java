@@ -44,4 +44,8 @@ public class CollectionManager {
         List<Collection> collectionList = collectionRepo.getCollectionByTagsIn(tagList);
         return collectionList.stream().map(collection-> collection.getId()).collect(Collectors.toList());
     }
+
+    public Collection saveCollection(Collection collection){
+        return collectionRepo.save(collection);
+    }
 }

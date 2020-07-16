@@ -2,15 +2,14 @@ package com.myntra.kuber.controller;
 
 import com.myntra.kuber.dao.impl.VideoRepoImpl;
 import com.myntra.kuber.manager.CollectionManager;
-import com.myntra.kuber.model.Collection;
-import com.myntra.kuber.model.Style;
 import com.myntra.kuber.model.Videos;
 import com.myntra.kuber.response.PopularVideosResponse;
 import com.myntra.kuber.response.Tag;
+import com.myntra.kuber.response.VideoResponse;
+import com.myntra.kuber.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +27,7 @@ import java.util.List;
 public class VideosController {
 
     @Autowired
-    private CollectionManager collectionManager;
+    private Utils utils;
 
     @Autowired
     private VideoRepoImpl videoRepo;
@@ -37,24 +36,28 @@ public class VideosController {
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity popularVideos(){
         PopularVideosResponse popularVideosResponse = new PopularVideosResponse();
+        List<VideoResponse> videoResponseList = new ArrayList<>();
+        List<Tag> popularTagList = utils.getPopularTags();
+        popularVideosResponse.setPopularTags(popularTagList);
         List<Videos> popularVideoList = videoRepo.getTopVideos();
         if(!popularVideoList.isEmpty()){
-            popularVideosResponse.setVideos(popularVideoList);
             popularVideoList.forEach(popularVideos -> {
-
-                List<Tag> popularVideosTags = new ArrayList<>();
+                VideoResponse videoResponse = new VideoResponse();
+                videoResponse.setVideoId(popularVideos.getVideoId());
+                videoResponse.setVideoLink(popularVideos.getVideoLink());
+                videoResponse.setVideoId(popularVideos.getVideoId());
+                List<Tag> videoTags = new ArrayList<>();
                 List<String> tagList = Arrays.asList(popularVideos.getVideoTags().split(","));
                 tagList.forEach(tags -> {
-                    Collection collection = collectionManager.getCollectionByTag(tags);
-                    if(collection != null) {
-                        Tag tag = new Tag(collection.getTag());
-                        popularVideosTags.add(tag);
-                    }
-                });
-                popularVideosResponse.setPopularTags(popularVideosTags);
-            });
+                        Tag tag = new Tag(tags);
+                        videoTags.add(tag);
 
+                });
+                videoResponse.setVideoTags(videoTags);
+                videoResponseList.add(videoResponse);
+            });
         }
+        popularVideosResponse.setVideos(videoResponseList);
 
         return ResponseEntity.ok(popularVideosResponse);
     }

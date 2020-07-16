@@ -32,4 +32,8 @@ public class CollectionStyleRepoImpl {
         return collectionStylesList.stream().map(collectionStyles -> collectionStyles.getStyleId()).collect(Collectors.toList());
     }
 
+    public void save(CollectionStyles collectionStyles){
+        collectionStyleRepository.save(collectionStyles);
+    }
+
 }

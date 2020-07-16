@@ -41,4 +41,9 @@ public class CollectionRepoImpl {
         List<Collection> collectionList = collectionRepository.findTop5ByOrderByScoreDesc();
         return collectionList;
     }
+
+    public Collection save(Collection collection){
+       return collectionRepository.save(collection);
+    }
 }
+

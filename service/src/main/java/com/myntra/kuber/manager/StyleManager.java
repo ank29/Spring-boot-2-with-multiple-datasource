@@ -1,6 +1,7 @@
 package com.myntra.kuber.manager;
 import com.myntra.kuber.dao.impl.CollectionStyleRepoImpl;
 import com.myntra.kuber.dao.impl.StyleRepoImpl;
+import com.myntra.kuber.model.Collection;
 import com.myntra.kuber.model.Style;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,4 +38,9 @@ public class StyleManager {
         List<Long> styleIdList = collectionStyleRepo.findDistinctStyleIdByCollectionId(collectionIdList);
         return getstyleList(styleIdList);
     }
+
+    public Long saveStyle(Style  style){
+       return styleRepo.saveStyle(style).getId();
+    }
 }
+
